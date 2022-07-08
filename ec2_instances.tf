@@ -20,18 +20,6 @@ resource "aws_instance" "custom_terminal" {
         source = "config/.zshrc"
         destination = "/home/ubuntu/.zshrc"
     }
-    provisioner "file" {
-        source = "config/.tmux.conf"
-        destination = "/root/.tmux.conf"
-    }
-    provisioner "file" {
-        source = "config/.p10k.zsh"
-        destination = "/root/.p10k.zsh"
-    }
-    provisioner "file" {
-        source = "config/.zshrc"
-        destination = "/root/.zshrc"
-    }
     connection {
         host = aws_instance.custom_terminal.public_ip
         type = "ssh"

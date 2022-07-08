@@ -48,3 +48,8 @@
     command: chown -R ubuntu:ubuntu /home/ubuntu/powerlevel10k/
   - name: Set Timezone
     command: timedatectl set-timezone Australia/Sydney
+  - name: Set ZSH to be the default
+    ansible.builtin.lineinfile:
+      path: /home/ubuntu/.bashrc
+      insertafter: EOF
+      line: exec zsh
