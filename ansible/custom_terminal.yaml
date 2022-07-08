@@ -2,9 +2,49 @@
 - hosts: localhost
   become: true
   tasks:
-  - name: Install OpenJDK 11 with APT
+  - name: Install zsh with APT
     package:
-      name: openjdk-11-jdk
+      name: zsh
       state: present
-  - name: Make OpenJDK 11 the default
-    command: update-java-alternatives -s java-1.11.0-openjdk-amd64
+  - name: Install xclip
+    package:
+      name: xclip
+      state: present
+  - name: Clone tmux-plugin tpm github repository
+    git:
+      repo: https://github.com/tmux-plugins/tpm
+      dest: /home/ubuntu/.tmux/plugins/tpm
+      clone: yes
+      update: yes
+  - name: Clone powerlevel10k github repository
+    git:
+      repo: https://github.com/romkatv/powerlevel10k.git
+      dest: /home/ubuntu/powerlevel10k
+      clone: yes
+      update: yes 
+  - name: Create directory for font files
+    file:
+      path: /home/ubuntu/.local/share/fonts
+      state: directory
+  - name: Download & Install MesloLGS NF Regular.ttf
+    get_url:
+      url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+      dest: '/home/ubuntu/.local/share/fonts/MesloLGS NF Regular.ttf'
+  - name: Download & Install MesloLGS NF Bold.ttf
+    get_url:
+      url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+      dest: '/home/ubuntu/.local/share/fonts/MesloLGS NF Bold.ttf'
+  - name: Download & Install MesloLGS NF Italic.ttf
+    get_url:
+      url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+      dest: '/home/ubuntu/.local/share/fonts/MesloLGS NF Italic.ttf'
+  - name: Download & Install MesloLGS NF Bold Italic.ttf
+    get_url:
+      url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+      dest: '/home/ubuntu/.local/share/fonts/MesloLGS NF Bold Italic.ttf'
+  - name: Change permissions of .tmux folder
+    command: chown -R ubuntu:ubuntu /home/ubuntu/.tmux/
+  - name: Change permissions of powerlevel10k folder
+    command: chown -R ubuntu:ubuntu /home/ubuntu/powerlevel10k/
+  - name: Set Timezone
+    command: timedatectl set-timezone Australia/Sydney

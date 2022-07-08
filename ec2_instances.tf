@@ -8,6 +8,30 @@ resource "aws_instance" "custom_terminal" {
         source = "ansible/custom_terminal.yaml"
         destination = "/home/ubuntu/custom_terminal.yaml"
     }
+    provisioner "file" {
+        source = "config/.tmux.conf"
+        destination = "/home/ubuntu/.tmux.conf"
+    }
+    provisioner "file" {
+        source = "config/.p10k.zsh"
+        destination = "/home/ubuntu/.p10k.zsh"
+    }
+    provisioner "file" {
+        source = "config/.zshrc"
+        destination = "/home/ubuntu/.zshrc"
+    }
+    provisioner "file" {
+        source = "config/.tmux.conf"
+        destination = "/root/.tmux.conf"
+    }
+    provisioner "file" {
+        source = "config/.p10k.zsh"
+        destination = "/root/.p10k.zsh"
+    }
+    provisioner "file" {
+        source = "config/.zshrc"
+        destination = "/root/.zshrc"
+    }
     connection {
         host = aws_instance.custom_terminal.public_ip
         type = "ssh"
