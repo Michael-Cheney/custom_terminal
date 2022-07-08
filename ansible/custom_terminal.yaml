@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Install OpenJDK 11 with APT
+    package:
+      name: openjdk-11-jdk
+      state: present
+  - name: Make OpenJDK 11 the default
+    command: update-java-alternatives -s java-1.11.0-openjdk-amd64
